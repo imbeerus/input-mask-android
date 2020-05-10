@@ -21,27 +21,27 @@ class FreeState(child: State, val ownCharacter: Char) : State(child) {
     override fun accept(character: Char): Next? {
         return if (this.ownCharacter == character) {
             Next(
-                this.nextState(),
-                character,
-                true,
-                null
+                    this.nextState(),
+                    character,
+                    true,
+                    null
             )
         } else {
             Next(
-                this.nextState(),
-                this.ownCharacter,
-                false,
-                null
+                    this.nextState(),
+                    this.ownCharacter,
+                    false,
+                    null
             )
         }
     }
 
     override fun autocomplete(): Next? {
         return Next(
-            this.nextState(),
-            this.ownCharacter,
-            false,
-            null
+                this.nextState(),
+                this.ownCharacter,
+                false,
+                null
         )
     }
 

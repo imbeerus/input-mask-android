@@ -17,16 +17,16 @@ package com.redmadrobot.inputmask.model
  * and also has an option to be **mandatory** or not.
  */
 data class Notation(
-    /**
-     * A symbol in format string.
-     */
-    val character: Char,
-    /**
-     * An associated character set of acceptable input characters.
-     */
-    val characterSet: String,
-    /**
-     * Is it an optional symbol or mandatory?
-     */
-    val isOptional: Boolean
+        /**
+         * A symbol in format string.
+         */
+        val character: Char,
+        /**
+         * An associated character set of acceptable input characters.
+         */
+        val characterSet: String,
+        /**
+         * Is it an optional symbol or mandatory?
+         */
+        val isOptional: Boolean
 )

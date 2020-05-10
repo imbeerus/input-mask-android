@@ -20,16 +20,16 @@ import java.util.*
  * Might be used as a decorator, which forwards TextWatcher calls to its own listener.
  */
 open class MaskedTextChangedListener(
-    var primaryFormat: String,
-    var affineFormats: List<String> = emptyList(),
-    var customNotations: List<Notation> = emptyList(),
-    var affinityCalculationStrategy: AffinityCalculationStrategy = AffinityCalculationStrategy.WHOLE_STRING,
-    var autocomplete: Boolean = true,
-    var autoskip: Boolean = false,
-    field: EditText,
-    var listener: TextWatcher? = null,
-    var valueListener: ValueListener? = null,
-    var rightToLeft: Boolean = false
+        var primaryFormat: String,
+        var affineFormats: List<String> = emptyList(),
+        var customNotations: List<Notation> = emptyList(),
+        var affinityCalculationStrategy: AffinityCalculationStrategy = AffinityCalculationStrategy.WHOLE_STRING,
+        var autocomplete: Boolean = true,
+        var autoskip: Boolean = false,
+        field: EditText,
+        var listener: TextWatcher? = null,
+        var valueListener: ValueListener? = null,
+        var rightToLeft: Boolean = false
 ) : TextWatcher, View.OnFocusChangeListener {
 
     interface ValueListener {
@@ -66,12 +66,12 @@ open class MaskedTextChangedListener(
      * Convenience constructor.
      */
     constructor(
-        format: String, autocomplete: Boolean, field: EditText, listener: TextWatcher?,
-        valueListener: ValueListener?
+            format: String, autocomplete: Boolean, field: EditText, listener: TextWatcher?,
+            valueListener: ValueListener?
     ) :
             this(
-                format, emptyList(), emptyList(), AffinityCalculationStrategy.WHOLE_STRING,
-                autocomplete, false, field, listener, valueListener
+                    format, emptyList(), emptyList(), AffinityCalculationStrategy.WHOLE_STRING,
+                    autocomplete, false, field, listener, valueListener
             )
 
     /**
@@ -90,8 +90,8 @@ open class MaskedTextChangedListener(
      * Convenience constructor.
      */
     constructor(
-        primaryFormat: String, affineFormats: List<String>, field: EditText, listener: TextWatcher?,
-        valueListener: ValueListener?
+            primaryFormat: String, affineFormats: List<String>, field: EditText, listener: TextWatcher?,
+            valueListener: ValueListener?
     ) :
             this(primaryFormat, affineFormats, true, field, listener, valueListener)
 
@@ -99,25 +99,25 @@ open class MaskedTextChangedListener(
      * Convenience constructor.
      */
     constructor(
-        primaryFormat: String, affineFormats: List<String>, autocomplete: Boolean, field: EditText,
-        listener: TextWatcher?, valueListener: ValueListener?
+            primaryFormat: String, affineFormats: List<String>, autocomplete: Boolean, field: EditText,
+            listener: TextWatcher?, valueListener: ValueListener?
     ) :
             this(
-                primaryFormat, affineFormats, AffinityCalculationStrategy.WHOLE_STRING, autocomplete, field, listener,
-                valueListener
+                    primaryFormat, affineFormats, AffinityCalculationStrategy.WHOLE_STRING, autocomplete, field, listener,
+                    valueListener
             )
 
     /**
      * Convenience constructor.
      */
     constructor(
-        primaryFormat: String, affineFormats: List<String>,
-        affinityCalculationStrategy: AffinityCalculationStrategy, autocomplete: Boolean, field: EditText,
-        listener: TextWatcher?, valueListener: ValueListener?
+            primaryFormat: String, affineFormats: List<String>,
+            affinityCalculationStrategy: AffinityCalculationStrategy, autocomplete: Boolean, field: EditText,
+            listener: TextWatcher?, valueListener: ValueListener?
     ) :
             this(
-                primaryFormat, affineFormats, emptyList(), affinityCalculationStrategy,
-                autocomplete, false, field, listener, valueListener
+                    primaryFormat, affineFormats, emptyList(), affinityCalculationStrategy,
+                    autocomplete, false, field, listener, valueListener
             )
 
     /**
@@ -204,7 +204,7 @@ open class MaskedTextChangedListener(
         val useAutocomplete = if (isDeletion) false else this.autocomplete
         val useAutoskip = if (isDeletion) this.autoskip else false
         val caretGravity =
-            if (isDeletion) CaretString.CaretGravity.BACKWARD(useAutoskip) else CaretString.CaretGravity.FORWARD(useAutocomplete)
+                if (isDeletion) CaretString.CaretGravity.BACKWARD(useAutoskip) else CaretString.CaretGravity.FORWARD(useAutocomplete)
 
         val caretPosition = if (isDeletion) cursorPosition else cursorPosition + count
         val textAndCaret = CaretString(text.toString(), caretPosition, caretGravity)
@@ -229,7 +229,7 @@ open class MaskedTextChangedListener(
             val textAndCaret = CaretString(text, text.length, CaretString.CaretGravity.FORWARD(this.autocomplete))
 
             val result: Mask.Result =
-                this.pickMask(textAndCaret).apply(textAndCaret)
+                    this.pickMask(textAndCaret).apply(textAndCaret)
 
             this.afterText = result.formattedText.string
             this.caretPosition = result.formattedText.caretPosition
@@ -240,7 +240,7 @@ open class MaskedTextChangedListener(
     }
 
     private fun pickMask(
-        text: CaretString
+            text: CaretString
     ): Mask {
         if (this.affineFormats.isEmpty()) return this.primaryMask
 
@@ -276,19 +276,19 @@ open class MaskedTextChangedListener(
     }
 
     private fun maskGetOrCreate(format: String, customNotations: List<Notation>): Mask =
-        if (this.rightToLeft) {
-            RTLMask.getOrCreate(format, customNotations)
-        } else {
-            Mask.getOrCreate(format, customNotations)
-        }
+            if (this.rightToLeft) {
+                RTLMask.getOrCreate(format, customNotations)
+            } else {
+                Mask.getOrCreate(format, customNotations)
+            }
 
     private fun calculateAffinity(
-        mask: Mask,
-        text: CaretString
+            mask: Mask,
+            text: CaretString
     ): Int {
         return this.affinityCalculationStrategy.calculateAffinityOfMask(
-            mask,
-            text
+                mask,
+                text
         )
     }
 
@@ -298,15 +298,15 @@ open class MaskedTextChangedListener(
          * `TextWatcher` and `onFocusChangeListener`.
          */
         fun installOn(
-            editText: EditText,
-            primaryFormat: String,
-            valueListener: ValueListener? = null
+                editText: EditText,
+                primaryFormat: String,
+                valueListener: ValueListener? = null
         ): MaskedTextChangedListener = installOn(
-            editText,
-            primaryFormat,
-            emptyList(),
-            AffinityCalculationStrategy.WHOLE_STRING,
-            valueListener
+                editText,
+                primaryFormat,
+                emptyList(),
+                AffinityCalculationStrategy.WHOLE_STRING,
+                valueListener
         )
 
         /**
@@ -314,48 +314,48 @@ open class MaskedTextChangedListener(
          * `TextWatcher` and `onFocusChangeListener`.
          */
         fun installOn(
-            editText: EditText,
-            primaryFormat: String,
-            affineFormats: List<String> = emptyList(),
-            affinityCalculationStrategy: AffinityCalculationStrategy = AffinityCalculationStrategy.WHOLE_STRING,
-            valueListener: ValueListener? = null
+                editText: EditText,
+                primaryFormat: String,
+                affineFormats: List<String> = emptyList(),
+                affinityCalculationStrategy: AffinityCalculationStrategy = AffinityCalculationStrategy.WHOLE_STRING,
+                valueListener: ValueListener? = null
         ): MaskedTextChangedListener = installOn(
-            editText,
-            primaryFormat,
-            affineFormats,
-            emptyList(),
-            affinityCalculationStrategy,
-            true,
-            false,
-            null,
-            valueListener
-        )
-
-        /**
-         * Create a `MaskedTextChangedListener` instance and assign it as a field's
-         * `TextWatcher` and `onFocusChangeListener`.
-         */
-        fun installOn(
-            editText: EditText,
-            primaryFormat: String,
-            affineFormats: List<String> = emptyList(),
-            customNotations: List<Notation> = emptyList(),
-            affinityCalculationStrategy: AffinityCalculationStrategy = AffinityCalculationStrategy.WHOLE_STRING,
-            autocomplete: Boolean = true,
-            autoskip: Boolean = false,
-            listener: TextWatcher? = null,
-            valueListener: ValueListener? = null
-        ): MaskedTextChangedListener {
-            val maskedListener = MaskedTextChangedListener(
+                editText,
                 primaryFormat,
                 affineFormats,
-                customNotations,
+                emptyList(),
                 affinityCalculationStrategy,
-                autocomplete,
-                autoskip,
-                editText,
-                listener,
+                true,
+                false,
+                null,
                 valueListener
+        )
+
+        /**
+         * Create a `MaskedTextChangedListener` instance and assign it as a field's
+         * `TextWatcher` and `onFocusChangeListener`.
+         */
+        fun installOn(
+                editText: EditText,
+                primaryFormat: String,
+                affineFormats: List<String> = emptyList(),
+                customNotations: List<Notation> = emptyList(),
+                affinityCalculationStrategy: AffinityCalculationStrategy = AffinityCalculationStrategy.WHOLE_STRING,
+                autocomplete: Boolean = true,
+                autoskip: Boolean = false,
+                listener: TextWatcher? = null,
+                valueListener: ValueListener? = null
+        ): MaskedTextChangedListener {
+            val maskedListener = MaskedTextChangedListener(
+                    primaryFormat,
+                    affineFormats,
+                    customNotations,
+                    affinityCalculationStrategy,
+                    autocomplete,
+                    autoskip,
+                    editText,
+                    listener,
+                    valueListener
             )
             editText.addTextChangedListener(maskedListener)
             editText.onFocusChangeListener = maskedListener

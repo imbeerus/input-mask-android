@@ -1,20 +1,25 @@
 package com.redmadrobot.inputmask.extensions
 
 import android.widget.EditText
-import com.redmadrobot.inputmask.MaskedTextChangedListener
 import com.redmadrobot.inputmask.model.Notation
 
-fun List<Notation>.buildMaskWatcher(
-        field: EditText,
+fun EditText.setNotationMaskWatcher(
+        notation: Notation,
         mask: String
-): MaskedTextChangedListener {
+) {
+    setNotationMaskWatcher(listOf(notation), mask)
+}
+
+fun EditText.setNotationMaskWatcher(
+        notations: List<Notation>,
+        mask: String
+) {
     if (mask.isEmpty()) {
         throw IllegalStateException("$mask shouldn't be empty")
     }
 
-    return MaskedTextChangedListener(
-            customNotations = this,
-            primaryFormat = mask,
-            field = field
+    installOn(
+            customNotations = notations,
+            primaryFormat = mask
     )
 }

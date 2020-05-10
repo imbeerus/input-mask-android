@@ -108,7 +108,7 @@ enum class AffinityCalculationStrategy {
             WHOLE_STRING -> mask.apply(text).affinity
 
             PREFIX -> mask.apply(
-                text
+                    text
             ).formattedText.string.prefixIntersection(text.string).length
 
             CAPACITY -> if (text.string.length > mask.totalTextLength()) {

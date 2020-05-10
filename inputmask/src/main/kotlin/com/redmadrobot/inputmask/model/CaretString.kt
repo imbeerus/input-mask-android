@@ -8,16 +8,16 @@ package com.redmadrobot.inputmask.model
  * @author taflanidi
  */
 data class CaretString(
-    val string: String,
-    val caretPosition: Int,
-    val caretGravity: CaretGravity
+        val string: String,
+        val caretPosition: Int,
+        val caretGravity: CaretGravity
 ) {
     fun reversed() =
-        CaretString(
-            this.string.reversed(),
-            this.string.length - this.caretPosition,
-            this.caretGravity
-        )
+            CaretString(
+                    this.string.reversed(),
+                    this.string.length - this.caretPosition,
+                    this.caretGravity
+            )
 
     sealed class CaretGravity {
         class FORWARD(val autocompleteValue: Boolean) : CaretGravity()

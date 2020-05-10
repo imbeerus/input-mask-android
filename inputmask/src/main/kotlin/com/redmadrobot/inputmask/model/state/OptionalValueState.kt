@@ -38,17 +38,17 @@ class OptionalValueState(child: State, val type: StateType) : State(child) {
     override fun accept(character: Char): Next? {
         return if (this.accepts(character)) {
             Next(
-                this.nextState(),
-                character,
-                true,
-                character
+                    this.nextState(),
+                    character,
+                    true,
+                    character
             )
         } else {
             Next(
-                this.nextState(),
-                null,
-                false,
-                null
+                    this.nextState(),
+                    null,
+                    false,
+                    null
             )
         }
     }

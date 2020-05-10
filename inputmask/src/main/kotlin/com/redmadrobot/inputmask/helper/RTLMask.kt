@@ -2,7 +2,7 @@ package com.redmadrobot.inputmask.helper
 
 import com.redmadrobot.inputmask.model.CaretString
 import com.redmadrobot.inputmask.model.Notation
-import java.util.HashMap
+import java.util.*
 
 /**
  * ### RTLMask
@@ -33,18 +33,18 @@ class RTLMask(format: String, customNotations: List<Notation>) : Mask(reversedFo
 }
 
 private fun reversedFormat(format: String) =
-    format
-        .reversed()
-        .replace("[\\", "\\]")
-        .replace("]\\", "\\[")
-        .replace("{\\", "\\}")
-        .replace("}\\", "\\{")
-        .map {
-            when (it) {
-                '[' -> ']'
-                ']' -> '['
-                '{' -> '}'
-                '}' -> '{'
-                else -> it
-            }
-        }.joinToString("")
+        format
+                .reversed()
+                .replace("[\\", "\\]")
+                .replace("]\\", "\\[")
+                .replace("{\\", "\\}")
+                .replace("}\\", "\\{")
+                .map {
+                    when (it) {
+                        '[' -> ']'
+                        ']' -> '['
+                        '{' -> '}'
+                        '}' -> '{'
+                        else -> it
+                    }
+                }.joinToString("")

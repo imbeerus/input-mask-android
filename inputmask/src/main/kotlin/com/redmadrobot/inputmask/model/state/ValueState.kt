@@ -68,10 +68,10 @@ class ValueState : State {
         if (!this.accepts(character)) return null
 
         return Next(
-            this.nextState(),
-            character,
-            true,
-            character
+                this.nextState(),
+                character,
+                true,
+                character
         )
     }
 

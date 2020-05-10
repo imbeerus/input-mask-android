@@ -20,27 +20,27 @@ class FixedState(child: State?, val ownCharacter: Char) : State(child) {
     override fun accept(character: Char): Next? {
         return if (this.ownCharacter == character) {
             Next(
-                this.nextState(),
-                character,
-                true,
-                character
+                    this.nextState(),
+                    character,
+                    true,
+                    character
             )
         } else {
             Next(
-                this.nextState(),
-                this.ownCharacter,
-                false,
-                this.ownCharacter
+                    this.nextState(),
+                    this.ownCharacter,
+                    false,
+                    this.ownCharacter
             )
         }
     }
 
     override fun autocomplete(): Next? {
         return Next(
-            this.nextState(),
-            this.ownCharacter,
-            false,
-            this.ownCharacter
+                this.nextState(),
+                this.ownCharacter,
+                false,
+                this.ownCharacter
         )
     }
 

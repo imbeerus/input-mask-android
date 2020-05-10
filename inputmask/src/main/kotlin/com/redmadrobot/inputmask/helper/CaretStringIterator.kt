@@ -14,15 +14,15 @@ import com.redmadrobot.inputmask.model.CaretString
  * @author taflanidi
  */
 open class CaretStringIterator(
-    protected val caretString: CaretString,
-    protected var currentIndex: Int = 0
+        protected val caretString: CaretString,
+        protected var currentIndex: Int = 0
 ) {
 
     open fun insertionAffectsCaret(): Boolean {
         return when (this.caretString.caretGravity) {
             is CaretString.CaretGravity.BACKWARD -> this.currentIndex < this.caretString.caretPosition
             is CaretString.CaretGravity.FORWARD -> this.currentIndex <= this.caretString.caretPosition
-                || (0 == this.currentIndex && 0 == this.caretString.caretPosition)
+                    || (0 == this.currentIndex && 0 == this.caretString.caretPosition)
         }
     }
 

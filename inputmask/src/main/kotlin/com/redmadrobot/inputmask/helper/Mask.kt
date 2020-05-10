@@ -33,30 +33,30 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
      * The end result of mask application to the user input string.
      */
     data class Result(
-        /**
-         * Formatted text with updated caret position.
-         */
-        val formattedText: CaretString,
-        /**
-         * Value, extracted from formatted text according to mask format.
-         */
-        val extractedValue: String,
-        /**
-         * Calculated absolute affinity value between the mask format and input text.
-         */
-        val affinity: Int,
-        /**
-         * User input is complete.
-         */
-        val complete: Boolean
+            /**
+             * Formatted text with updated caret position.
+             */
+            val formattedText: CaretString,
+            /**
+             * Value, extracted from formatted text according to mask format.
+             */
+            val extractedValue: String,
+            /**
+             * Calculated absolute affinity value between the mask format and input text.
+             */
+            val affinity: Int,
+            /**
+             * User input is complete.
+             */
+            val complete: Boolean
     ) {
         fun reversed() =
-            Result(
-                this.formattedText.reversed(),
-                this.extractedValue.reversed(),
-                this.affinity,
-                this.complete
-            )
+                Result(
+                        this.formattedText.reversed(),
+                        this.extractedValue.reversed(),
+                        this.affinity,
+                        this.complete
+                )
     }
 
     companion object Factory {
@@ -181,14 +181,14 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
         }
 
         return Result(
-            CaretString(
-                modifiedString,
-                modifiedCaretPosition,
-                text.caretGravity
-            ),
-            extractedValue,
-            affinity,
-            this.noMandatoryCharactersLeftAfterState(state)
+                CaretString(
+                        modifiedString,
+                        modifiedCaretPosition,
+                        text.caretGravity
+                ),
+                extractedValue,
+                affinity,
+                this.noMandatoryCharactersLeftAfterState(state)
         )
     }
 
@@ -341,10 +341,18 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
 
     private fun noMandatoryCharactersLeftAfterState(state: State): Boolean {
         return when (state) {
-            is EOLState -> { true }
-            is ValueState -> { return state.isElliptical }
-            is FixedState -> { false }
-            else -> { this.noMandatoryCharactersLeftAfterState(state.nextState()) }
+            is EOLState -> {
+                true
+            }
+            is ValueState -> {
+                return state.isElliptical
+            }
+            is FixedState -> {
+                false
+            }
+            else -> {
+                this.noMandatoryCharactersLeftAfterState(state.nextState())
+            }
         }
     }
 

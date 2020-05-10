@@ -25,12 +25,12 @@ import com.redmadrobot.inputmask.model.state.*
  * @author taflanidi
  */
 class Compiler(
-    /**
-     * A list of custom rules to compile square bracket ```[]``` groups of format symbols.
-     *
-     * @see ```Notation``` class.
-     */
-    private val customNotations: List<Notation>
+        /**
+         * A list of custom rules to compile square bracket ```[]``` groups of format symbols.
+         *
+         * @see ```Notation``` class.
+         */
+        private val customNotations: List<Notation>
 ) {
 
     /**
@@ -91,10 +91,10 @@ class Compiler(
         val sanitizedString: String = FormatSanitizer().sanitize(formatString)
 
         return this.compile(
-            sanitizedString,
-            false,
-            false,
-            null
+                sanitizedString,
+                false,
+                false,
+                null
         )
     }
 
@@ -109,10 +109,10 @@ class Compiler(
             '[' -> {
                 if ('\\' != lastCharacter) {
                     return this.compile(
-                        formatString.drop(1),
-                        true,
-                        false,
-                        char
+                            formatString.drop(1),
+                            true,
+                            false,
+                            char
                     )
                 }
             }
@@ -120,10 +120,10 @@ class Compiler(
             '{' -> {
                 if ('\\' != lastCharacter) {
                     return this.compile(
-                        formatString.drop(1),
-                        false,
-                        true,
-                        char
+                            formatString.drop(1),
+                            false,
+                            true,
+                            char
                     )
                 }
             }
@@ -131,10 +131,10 @@ class Compiler(
             ']' -> {
                 if ('\\' != lastCharacter) {
                     return this.compile(
-                        formatString.drop(1),
-                        false,
-                        false,
-                        char
+                            formatString.drop(1),
+                            false,
+                            false,
+                            char
                     )
                 }
             }
@@ -142,10 +142,10 @@ class Compiler(
             '}' -> {
                 if ('\\' != lastCharacter) {
                     return this.compile(
-                        formatString.drop(1),
-                        false,
-                        false,
-                        char
+                            formatString.drop(1),
+                            false,
+                            false,
+                            char
                     )
                 }
             }
@@ -153,10 +153,10 @@ class Compiler(
             '\\' -> {
                 if ('\\' != lastCharacter) {
                     return this.compile(
-                        formatString.drop(1),
-                        valuable,
-                        fixed,
-                        char
+                            formatString.drop(1),
+                            valuable,
+                            fixed,
+                            char
                     )
                 }
             }
@@ -166,37 +166,37 @@ class Compiler(
             when (char) {
                 '0' -> {
                     return ValueState(
-                        this.compile(
-                            formatString.drop(1),
-                            true,
-                            false,
-                            char
-                        ),
-                        ValueState.StateType.Numeric()
+                            this.compile(
+                                    formatString.drop(1),
+                                    true,
+                                    false,
+                                    char
+                            ),
+                            ValueState.StateType.Numeric()
                     )
                 }
 
                 'A' -> {
                     return ValueState(
-                        this.compile(
-                            formatString.drop(1),
-                            true,
-                            false,
-                            char
-                        ),
-                        ValueState.StateType.Literal()
+                            this.compile(
+                                    formatString.drop(1),
+                                    true,
+                                    false,
+                                    char
+                            ),
+                            ValueState.StateType.Literal()
                     )
                 }
 
                 '_' -> {
                     return ValueState(
-                        this.compile(
-                            formatString.drop(1),
-                            true,
-                            false,
-                            char
-                        ),
-                        ValueState.StateType.AlphaNumeric()
+                            this.compile(
+                                    formatString.drop(1),
+                                    true,
+                                    false,
+                                    char
+                            ),
+                            ValueState.StateType.AlphaNumeric()
                     )
                 }
 
@@ -206,37 +206,37 @@ class Compiler(
 
                 '9' -> {
                     return OptionalValueState(
-                        this.compile(
-                            formatString.drop(1),
-                            true,
-                            false,
-                            char
-                        ),
-                        OptionalValueState.StateType.Numeric()
+                            this.compile(
+                                    formatString.drop(1),
+                                    true,
+                                    false,
+                                    char
+                            ),
+                            OptionalValueState.StateType.Numeric()
                     )
                 }
 
                 'a' -> {
                     return OptionalValueState(
-                        this.compile(
-                            formatString.drop(1),
-                            true,
-                            false,
-                            char
-                        ),
-                        OptionalValueState.StateType.Literal()
+                            this.compile(
+                                    formatString.drop(1),
+                                    true,
+                                    false,
+                                    char
+                            ),
+                            OptionalValueState.StateType.Literal()
                     )
                 }
 
                 '-' -> {
                     return OptionalValueState(
-                        this.compile(
-                            formatString.drop(1),
-                            true,
-                            false,
-                            char
-                        ),
-                        OptionalValueState.StateType.AlphaNumeric()
+                            this.compile(
+                                    formatString.drop(1),
+                                    true,
+                                    false,
+                                    char
+                            ),
+                            OptionalValueState.StateType.AlphaNumeric()
                     )
                 }
 
@@ -246,24 +246,24 @@ class Compiler(
 
         if (fixed) {
             return FixedState(
-                this.compile(
-                    formatString.drop(1),
-                    false,
-                    true,
+                    this.compile(
+                            formatString.drop(1),
+                            false,
+                            true,
+                            char
+                    ),
                     char
-                ),
-                char
             )
         }
 
         return FreeState(
-            this.compile(
-                formatString.drop(1),
-                false,
-                false,
+                this.compile(
+                        formatString.drop(1),
+                        false,
+                        false,
+                        char
+                ),
                 char
-            ),
-            char
         )
     }
 
@@ -283,23 +283,23 @@ class Compiler(
             if (customNotation.character == char) {
                 return if (customNotation.isOptional) {
                     OptionalValueState(
-                        this.compile(
-                            string.drop(1),
-                            true,
-                            false,
-                            char
-                        ),
-                        OptionalValueState.StateType.Custom(char, customNotation.characterSet)
+                            this.compile(
+                                    string.drop(1),
+                                    true,
+                                    false,
+                                    char
+                            ),
+                            OptionalValueState.StateType.Custom(char, customNotation.characterSet)
                     )
                 } else {
                     ValueState(
-                        this.compile(
-                            string.drop(1),
-                            true,
-                            false,
-                            char
-                        ),
-                        ValueState.StateType.Custom(char, customNotation.characterSet)
+                            this.compile(
+                                    string.drop(1),
+                                    true,
+                                    false,
+                                    char
+                            ),
+                            ValueState.StateType.Custom(char, customNotation.characterSet)
                     )
                 }
             }
@@ -310,8 +310,8 @@ class Compiler(
     private fun determineTypeWithCustomNotations(lastCharacter: Char?): ValueState.StateType {
         customNotations.forEach { notation: Notation ->
             if (notation.character == lastCharacter) return ValueState.StateType.Custom(
-                lastCharacter,
-                notation.characterSet
+                    lastCharacter,
+                    notation.characterSet
             )
         }
         throw FormatError()

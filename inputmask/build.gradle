@@ -1,25 +1,19 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.github.lndmflngs'
 
 android {
-    compileSdkVersion build_versions.compile_sdk
+    compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion build_versions.min_sdk
-        targetSdkVersion build_versions.target_sdk
+        minSdkVersion 14
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
 
-        archivesBaseName = "input-mask-android"
-
-        versionCode getVersionCodeFromProperties()
-        versionName getVersionNameFromProperties()
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     sourceSets {
@@ -29,36 +23,13 @@ android {
         test.java.srcDirs += 'src/test/kotlin'
     }
 
-    dokka {
-        outputFormat = 'html'
-        outputDirectory = "$buildDir/documentation"
-
-        reportUndocumented = false
-        includeNonPublic = true
-        skipEmptyPackages = false
-
-        includes = ['module-info.md']
-
-        sourceDirs = files('src/main/kotlin')
-        kotlinTasks {
-            // Workaround to avoid generating unnecessary documentation
-        }
-    }
 }
 
 dependencies {
-    implementation deps.kotlin.stdlib
-
-    testImplementation deps.test.junit
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
 }
 
-task dokkaMarkdown(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    outputFormat = 'markdown'
-    outputDirectory = "$buildDir/markdowndoc"
+repositories {
+    mavenCentral()
 }
-
-task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    outputFormat = 'javadoc'
-    outputDirectory = "$buildDir/javadoc"
-}
-
