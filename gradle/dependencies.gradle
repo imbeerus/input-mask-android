@@ -34,7 +34,7 @@ deps.gradle = gradle
 def kotlin = [:]
 
 versions.kotlin = "1.3.72"
-versions.dokka = "0.9.17"
+versions.dokka = "0.9.18"
 
 kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
 kotlin.test = "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin"
