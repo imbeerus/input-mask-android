@@ -1,7 +1,8 @@
 <img src="https://raw.githubusercontent.com/RedMadRobot/input-mask-ios/assets/Assets/input-mask-cursor.gif" alt="Input Mask" height="40" />
 
-[![API](https://img.shields.io/badge/API-14%2B-blue.svg)](https://android-arsenal.com/api?level=14)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+[![API](https://img.shields.io/badge/API-14%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=14)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)]()
+[![source](https://img.shields.io/badge/forked-RedMadRobot/input--mask--android-red?style=flat-square)](https://github.com/RedMadRobot/input-mask-android)
 
 <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/direct-input.gif" alt="Direct input" width="210"/>
 
