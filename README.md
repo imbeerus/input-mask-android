@@ -1,30 +1,9 @@
 <img src="https://raw.githubusercontent.com/RedMadRobot/input-mask-ios/assets/Assets/input-mask-cursor.gif" alt="Input Mask" height="40" />
 
-[![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Input%20Mask-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/4642)
-[![Bintray](https://api.bintray.com/packages/redmadrobot-opensource/android/input-mask-android/images/download.svg)](https://bintray.com/redmadrobot-opensource/android/input-mask-android/_latestVersion)
-[![codebeat badge](https://codebeat.co/badges/e87a117d-3be1-407b-ad4c-973f90d88cd2)](https://codebeat.co/projects/github-com-redmadrobot-input-mask-android-master)
+[![API](https://img.shields.io/badge/API-14%2B-blue.svg)](https://android-arsenal.com/api?level=14)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
-[![Platform](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/platform.svg)]()[![Android](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/android.svg)](https://github.com/RedMadRobot/input-mask-android)[![iOS](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/ios_rect.svg)](https://github.com/RedMadRobot/input-mask-ios)[![macOS](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/macos.svg)](https://github.com/RedMadRobot/input-mask-ios)
-
 <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/direct-input.gif" alt="Direct input" width="210"/>
-<details>
-<summary>More GIFs [~3 MB]</summary>
-  <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/making-corrections.gif" alt="Direct input" width="210"/>
-  <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/cursor-movement.gif" alt="Direct input" width="210"/>
-  <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/do-it-yourself.gif" alt="Direct input" width="210"/><br/>
-  <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/complete.gif" alt="Direct input" width="210"/>
-  <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/extract-value.gif" alt="Direct input" width="210"/>
-</details>
-
-### Migration Guide: v.6
-    
-This update brings breaking changes. Namely, the `autocomplete` flag is now a part of the `CaretGravity` enum, thus the `Mask::apply` call is now single-argument, as all the necessary information is included into the `CaretString` structure.
-
-`v.6` introduces the «autoskip» feature, which allows the cursor to jump over formatting blocks of symbols in the middle of the text as if they were a single char when hitting `Backspace`, and this feature also allows to trim formatting characters on backspacing at the end of the line.
-
-Make sure to take a look at our [CHANGELOG](https://github.com/RedMadRobot/input-mask-android/blob/master/CHANGELOG.md).
 
 ## Description
 
@@ -55,7 +34,7 @@ Mask examples:
 ## Questions & Issues
 
 Check out our [wiki](https://github.com/RedMadRobot/input-mask-android/wiki) for further reading.  
-Please also take a closer look at our [Known issues](#knownissues) section before you incorporate our library into your project.
+Please also take a closer look at our [Known issues](https://github.com/RedMadRobot/input-mask-android#knownissues) section before you incorporate our library into your project.
 
 For your bugreports and feature requests please file new issues as usually.
 
@@ -71,92 +50,19 @@ We also have a community-driven [cookbook](https://github.com/RedMadRobot/input-
 
 Make sure you've added Kotlin support to your project.
 
-```gradle
-repositories {
-    jcenter()
+```
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
 }
-
+```
+```
 dependencies {
-    implementation 'com.redmadrobot:input-mask-android:6.0.0'
-    
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:$latest_version'
+        implementation 'com.github.lndmflngs:input-mask-android:1.0.0'
 }
 ```
-
-<a name="knownissues" />
-
-# Known issues
-## InputMask vs. `NoClassDefFoundError`
-
-```
-java.lang.NoClassDefFoundError: Failed resolution of: Lkotlin/jvm/internal/Intrinsics;
-```
-Receiving this error might mean you haven't configured Kotlin for your Java only project. Consider explicitly adding the following to the list of your project dependencies:
-```
-implementation 'org.jetbrains.kotlin:kotlin-stdlib:$latest_version'
-```
-— where `latest_version` is the current version of `kotlin-stdlib`.
-
-## InputMask vs. `android:inputType` and `IndexOutOfBoundsException`
-
-Be careful when specifying field's `android:inputType`. 
-The library uses native `Editable` variable received on `afterTextChange` event in order to replace text efficiently. Because of that, field's `inputType` is actually considered when the library is trying to mutate the text. 
-
-For instance, having a field with `android:inputType="numeric"`, you cannot put spaces and dashes into the mentioned `Editable` variable by default. Doing so will cause an out of range exception when the `MaskedTextChangedListener` will try to reposition the cursor.
-
-Still, you may use a workaround by putting the `android:digits` value beside your `android:inputType`; there, you should specify all the acceptable symbols:
-```xml
-<EditText
-    android:inputType="number"
-    android:digits="0123456789 -."
-    ... />
-```
-— such that, you'll have the SDK satisfied.
-
-Alternatively, if you are using a programmatic approach without XML files, you may consider configuring a `KeyListener` like this:
-```java
-editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-editText.setKeyListener(DigitsKeyListener.getInstance("0123456789 -.")); // modify character set for your case, e.g. add "+()"
-```
-
-## InputMask vs. autocorrection & prediction
-> (presumably fixed by [PR50](https://github.com/RedMadRobot/input-mask-android/pull/50))
-
-Symptoms: 
-* You've got a wildcard template like `[________]`, allowing user to write any kind of symbols;
-* Cursor jumps to the beginning of the line or to some random position while user input.
-
-In this case text autocorrection & prediction might be a root cause of your problem, as it behaves somewhat weirdly in case when field listener tries to change the text during user input.
-
-If so, consider disabling text suggestions by using corresponding input type:
-```xml
-<EditText
-    ...
-    android:inputType="textNoSuggestions" />
-```
-Additionally be aware that some of the third-party keyboards ignore `textNoSuggestions` setting; the recommendation is to use an extra workaround by setting the `inputType` to `textVisiblePassword`.
-
-## InputMask vs. `android:textAllCaps`
-> Kudos to [Weiyi Li](https://github.com/li2) for [reporting](https://github.com/RedMadRobot/input-mask-android/issues/85) this issue
-
-Please be advised that `android:textAllCaps` is [not meant](https://developer.android.com/reference/android/widget/TextView.html#setAllCaps(boolean)) to work with `EditText` instances:
-
-> This setting will be ignored if this field is editable or selectable.
-
-Enabling this setting on editable and/or selectable fields leads to weird and unpredictable behaviour and sometimes even [crashes](https://twitter.com/dimsuz/status/731117910337441793). Instead, consider using `android:inputType="textCapCharacters"` or workaround by adding an `InputFilter`:
-
-```java
-final InputFilter[] filters = { new InputFilter.AllCaps() };
-editText.setFilters(filters);
-```
-
-Bare in mind, you might have to befriend this solution with your existing `android:digits` [property](#inputmask-vs-androidinputtype-and-indexoutofboundsexception) in case your text field accepts both digits and letters. 
-
-## References
-
-The list of projects that are using this library which were kind enough to share that information.
-
-Feel free to add yours below.
 
 ## Special thanks
 
