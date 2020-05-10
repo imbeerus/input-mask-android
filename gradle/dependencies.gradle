@@ -33,7 +33,7 @@ deps.gradle = gradle
 //region Kotlin
 def kotlin = [:]
 
-versions.kotlin = "1.3.21"
+versions.kotlin = "1.3.72"
 versions.dokka = "0.9.17"
 
 kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
